@@ -154,6 +154,6 @@ Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 
 
  ```
-<h2>Link para o vídeo de apresentação</h2>
+<h2>Link para o vídeo testando a API no Postman</h2>
 <a href="https://www.youtube.com/watch?v=R_hAjIFm8Bg"><img src="https://cdn.discordapp.com/attachments/668195190829219887/1125960945223602256/youtube-logo.png" width=550 height=350></a>
 
