@@ -154,6 +154,12 @@ Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 
 
  ```
+Apos isso abra o terminar e insira o comando "composer install" para instalar as dependências do projeto
+
+Inicia no XAMPP o Apache e o MYSQL
+
+E execute no terminal o comando "php artisan serve" para inciciar o servidor
+
 <h2>Link para o vídeo testando a API no Postman</h2>
 <a href="https://www.youtube.com/watch?v=R_hAjIFm8Bg"><img src="https://cdn.discordapp.com/attachments/668195190829219887/1125960945223602256/youtube-logo.png" width=550 height=350></a>
 
