@@ -2,6 +2,16 @@
 
 <h1>API em <a href="https://laravel.com/"><img src="https://laravel.com/img/logotype.min.svg"></a> - Conclusão da matéria Criação de API Rest básica com PHP </h1>
 
+Acesse o repositorio do trabalho e clone ele pelo git bash para ter a base solicitada pelo professor
+<details>
+  <summary>✍️ Link do repositório da tarefa</summary>
+  <br/>
+
+  **https://github.com/joaovcandrade/projeto-laravel**
+
+  </div>
+</details> 
+
 1- Acessar a pasta app/Http/Controllers/TaskController.php e trocar pelo seguinte codigo:
  
  ```
@@ -147,5 +157,3 @@ Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 <h2>Link para o vídeo de apresentação</h2>
 <a href="https://www.youtube.com/watch?v=R_hAjIFm8Bg"><img src="https://cdn.discordapp.com/attachments/668195190829219887/1125960945223602256/youtube-logo.png" width=550 height=350></a>
 
-Segue video testando as API:
-https://www.youtube.com/watch?v=R_hAjIFm8Bg
