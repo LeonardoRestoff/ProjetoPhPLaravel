@@ -1,23 +1,151 @@
 <a href="https://twitter.com/home"><img src="https://cdn.discordapp.com/attachments/1125487567257739356/1125950651155881984/1200px-Laravel.svg_preview_rev_1.png"></a>
 
-Trabalho para a conclusão da disciplina criação de  Api Rest Básica  com PHP
+<h1>API em <a href="https://laravel.com/"><img src="https://laravel.com/img/logotype.min.svg"></a> - Conclusão da matéria Criação de API Rest básica com PHP </h1>
 
-Professor João Vitor da Costa Andrade
+1- Acessar a pasta app/Http/Controllers/TaskController.php e trocar pelo seguinte codigo:
+ 
+ ```
+ <?php
 
-Aplicação de API Rest usando PHP  e um banco de dados MySQL. Sistema de gerenciamento de tarefas utilizando laravel. O sistema é capaz de:
+namespace App\Http\Controllers;
 
--Listar todas as tarefas
+use Illuminate\Http\Request;
+use App\Models\Task;
 
--Obter detalhes de uma tarefa especifica
+class TaskController extends Controller
+{
+    public function index()
+    {
+        $tasks = Task::all();
 
--Criar uma nova tarefa
+        return response()->json($tasks);
+    }
 
--Atualizar os dados de uma nova tarefa
+    public function show($id)
+    {
+        $task = Task::find($id);
 
--Excluir uma tarefa
+        if ($task) {
+            return response()->json($task);
+        } else {
+            return response()->json(['error' => 'Tarefa não encontrada'], 404);
+        }
+    }
 
-<a href="https://twitter.com/home"><img src="https://cdn.discordapp.com/attachments/1125487567257739356/1125959772022255657/yt_1200_preview_rev_1.png"></a>
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
 
+        $task = new Task;
+        $task->title = $request->input('title');
+        $task->description = $request->input('description');
+        $task->status = $request->input('status', false);
+        $task->save();
+
+        return response()->json($task, 201);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $task = Task::find($id);
+
+        if ($task) {
+            $request->validate([
+                'title' => 'required',
+                'description' => 'required',
+            ]);
+
+            $task->title = $request->input('title');
+            $task->description = $request->input('description');
+            $task->status = $request->input('status', $task->status);
+            $task->save();
+
+            return response()->json($task);
+        } else {
+            return response()->json(['error' => 'Tarefa não encontrada'], 404);
+        }
+    }
+
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+
+        if ($task) {
+            $task->delete();
+
+            return response()->json(['message' => 'Tarefa excluída com sucesso']);
+        } else {
+            return response()->json(['error' => 'Tarefa não encontrada'], 404);
+        }
+    }
+}
+ ```
+2- Acessar a pasta database/migrations/2023_06_27_221132_create_tasks_table.php e colocar o seguinte codigo:
+  
+ 
+ ```
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateTasksTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('tasks', function (Blueprint $table) {
+            $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->boolean('status')->default(false);
+            $table->timestamps();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('tasks');
+    }
+}
+ ```
+
+3- Acessar a pasta routes/api.php e colocar o seguinte codigo:
+ 
+ ```
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/tasks', 'TaskController@index');
+Route::get('/tasks/{id}', 'TaskController@show');
+Route::post('/tasks', 'TaskController@store');
+Route::put('/tasks/{id}', 'TaskController@update');
+Route::delete('/tasks/{id}', 'TaskController@destroy');
+ ```
+4- Acessar a pasta routes/web.php e colocar o seguinte codigo:
+ 
+ ```
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TaskController;
+
+Route::get('/tasks', [TaskController::class, 'index']);
+Route::get('/tasks/{id}', [TaskController::class, 'show']);
+Route::post('/tasks', [TaskController::class, 'store']);
+Route::put('/tasks/{id}', [TaskController::class, 'update']);
+Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+
+
+
+ ```
+<h2>Link para o vídeo de apresentação</h2>
+<a href="https://www.youtube.com/watch?v=R_hAjIFm8Bg"><img src="https://cdn.discordapp.com/attachments/668195190829219887/1125960945223602256/youtube-logo.png" width=550 height=350></a>
 
 Segue video testando as API:
 https://www.youtube.com/watch?v=R_hAjIFm8Bg
